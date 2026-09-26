@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Database temporary files & runtime logs
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+*.log
+node_data/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

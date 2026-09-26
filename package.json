@@ -1,0 +1,25 @@
+{
+  "name": "vault-app",
+  "version": "5.2.0",
+  "description": "Vault: Distributed Object Storage Platform — Full-Stack Monorepo (Frontend & Node.js Cluster Backend)",
+  "private": true,
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "start:gateway": "cd backend && node server.js",
+    "start:cluster": "cd backend && powershell -ExecutionPolicy Bypass -File ./scripts/start-nodes.ps1",
+    "init:db": "cd backend && node db/init.js",
+    "register:nodes": "cd backend && node scripts/register-nodes.js"
+  },
+  "keywords": [
+    "distributed-systems",
+    "object-storage",
+    "s3",
+    "self-healing",
+    "raft",
+    "quorum",
+    "sharding",
+    "chaos-engineering"
+  ],
+  "author": "Naresh",
+  "license": "MIT"
+}
