@@ -5,6 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "test": "node --test ../tests/**/*.test.js",
+    "test:unit": "node --test ../tests/unit/*.test.js",
+    "test:integration": "node --test ../tests/integration/*.test.js",
+    "test:e2e": "node --test ../tests/e2e/*.test.js",
     "dev": "nodemon server.js",
     "node1": "node storage-node.js --port=9001 --dir=./node_data/node1 --name=Node-Alpha",
     "node2": "node storage-node.js --port=9002 --dir=./node_data/node2 --name=Node-Beta",

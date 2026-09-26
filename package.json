@@ -4,6 +4,11 @@
   "description": "Vault: Distributed Object Storage Platform — Full-Stack Monorepo (Frontend & Node.js Cluster Backend)",
   "private": true,
   "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "test:unit": "node --test tests/unit/*.test.js",
+    "test:integration": "node --test tests/integration/*.test.js",
+    "test:e2e": "node --test tests/e2e/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage tests/**/*.test.js",
     "install:backend": "cd backend && npm install",
     "start:gateway": "cd backend && node server.js",
     "start:cluster": "cd backend && powershell -ExecutionPolicy Bypass -File ./scripts/start-nodes.ps1",
@@ -18,7 +23,9 @@
     "raft",
     "quorum",
     "sharding",
-    "chaos-engineering"
+    "chaos-engineering",
+    "unit-testing",
+    "e2e-testing"
   ],
   "author": "Naresh",
   "license": "MIT"

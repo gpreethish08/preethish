@@ -3,12 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:;" />
   <title>Settings & Supabase Sync — Vault Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <script src="vault-storage.js"></script>
   <style>
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 16px;
+      background: #FF6B35;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      z-index: 99999;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: top 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid #8B5CF6;
+    }
+    :focus-visible {
+      outline: 2px solid #FF6B35 !important;
+      outline-offset: 3px !important;
+    }
     :root {
       --primary: #FF6B35;
       --primary-hover: #E85A24;
@@ -186,35 +208,37 @@
 </head>
 <body>
 
-  <div class="ambient-bg">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="ambient-bg" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
   </div>
 
   <!-- Desktop Sidebar -->
-  <aside class="sidebar">
-    <a href="index.html" class="sidebar-brand">
-      <div class="brand-icon">🛡️</div>
+  <aside class="sidebar" role="navigation" aria-label="Settings Navigation">
+    <a href="index.html" class="sidebar-brand" aria-label="Vault Home">
+      <div class="brand-icon" aria-hidden="true">🛡️</div>
       <div class="brand-title">Vault</div>
     </a>
 
     <ul class="nav-list">
-      <li class="nav-item"><a href="dashboard.html">📊 Dashboard</a></li>
-      <li class="nav-item"><a href="files.html">📁 File Manager</a></li>
-      <li class="nav-item"><a href="cluster.html">🖥️ Cluster Health</a></li>
-      <li class="nav-item"><a href="chaos.html">⚡ Chaos Lab</a></li>
-      <li class="nav-item active"><a href="settings.html">⚙️ Settings</a></li>
+      <li class="nav-item"><a href="dashboard.html"><span aria-hidden="true">📊 </span>Dashboard</a></li>
+      <li class="nav-item"><a href="files.html"><span aria-hidden="true">📁 </span>File Manager</a></li>
+      <li class="nav-item"><a href="cluster.html"><span aria-hidden="true">🖥️ </span>Cluster Health</a></li>
+      <li class="nav-item"><a href="chaos.html"><span aria-hidden="true">⚡ </span>Chaos Lab</a></li>
+      <li class="nav-item active"><a href="settings.html" aria-current="page"><span aria-hidden="true">⚙️ </span>Settings</a></li>
     </ul>
   </aside>
 
-  <main class="main-wrapper">
+  <main class="main-wrapper" id="main-content" role="main">
     <div class="topbar">
       <div>
         <h1>Cluster Configuration & Storage Policies</h1>
         <p>Manage Supabase cloud endpoints, broadcast thresholds, and sharding parameters.</p>
       </div>
       <div>
-        <button class="btn btn-secondary" onclick="toggleTheme()" id="themeBtn">☀️ Toggle Theme</button>
+        <button class="btn btn-secondary" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle Dark and Light Theme"><span aria-hidden="true">☀️ </span>Toggle Theme</button>
       </div>
     </div>
 
@@ -223,18 +247,18 @@
       <div class="panel-title"><span>⚡</span> Supabase Cloud Database & Storage API</div>
       
       <div class="form-group">
-        <label class="form-label">Programmatic Supabase API URL</label>
+        <label for="supabaseUrlInput" class="form-label">Programmatic Supabase API URL</label>
         <input type="text" class="form-input" id="supabaseUrlInput" value="https://csrhmocmponregwceknr.supabase.co" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Supabase Anon Public API Key</label>
+        <label for="supabaseKeyInput" class="form-label">Supabase Anon Public API Key</label>
         <input type="password" class="form-input" id="supabaseKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." value="sbp_vault_demo_key_csrhmocmponregwceknr" />
       </div>
 
       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn btn-primary" onclick="testSupabaseConnection()">🔍 Test Cloud API Connection</button>
-        <a href="https://supabase.com/dashboard/project/csrhmocmponregwceknr" target="_blank" rel="noopener" class="btn btn-secondary">🗄️ Open Supabase Visual Dashboard →</a>
+        <button class="btn btn-primary" aria-label="Test Supabase connection" onclick="testSupabaseConnection()"><span aria-hidden="true">🔍 </span>Test Cloud API Connection</button>
+        <a href="https://supabase.com/dashboard/project/csrhmocmponregwceknr" target="_blank" rel="noopener" class="btn btn-secondary" aria-label="Open Supabase Visual Dashboard in new tab"><span aria-hidden="true">🗄️ </span>Open Supabase Visual Dashboard →</a>
       </div>
     </div>
 

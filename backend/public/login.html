@@ -3,11 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:;" />
   <title>Sign In — Vault Distributed Storage Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 16px;
+      background: #FF6B35;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      z-index: 99999;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: top 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid #8B5CF6;
+    }
+    :focus-visible {
+      outline: 2px solid #FF6B35 !important;
+      outline-offset: 3px !important;
+    }
     :root {
       --primary: #FF6B35;
       --primary-hover: #E85A24;
@@ -269,53 +291,54 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <div class="ambient-bg">
+  <div class="ambient-bg" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
   </div>
 
-  <div class="auth-card">
+  <main class="auth-card" id="main-content" role="main">
     <div class="brand-header">
-      <div class="brand-logo">🔐</div>
+      <div class="brand-logo" aria-hidden="true">🔐</div>
       <h1 class="brand-title">Vault Storage</h1>
       <p class="brand-subtitle">Distributed Object Storage & Health Telemetry</p>
     </div>
 
-    <div class="auth-tabs">
-      <div class="auth-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign In</div>
-      <div class="auth-tab" id="tabSignUp" onclick="switchTab('signup')">Create Account</div>
+    <div class="auth-tabs" role="tablist">
+      <button type="button" role="tab" aria-selected="true" class="auth-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign In</button>
+      <button type="button" role="tab" aria-selected="false" class="auth-tab" id="tabSignUp" onclick="switchTab('signup')">Create Account</button>
     </div>
 
-    <form id="authForm" onsubmit="handleAuth(event)">
+    <form id="authForm" onsubmit="handleAuth(event)" aria-label="Cluster Authentication Form">
       <div class="form-group" id="nameGroup" style="display: none;">
-        <label class="form-label">Full Name</label>
+        <label for="nameInput" class="form-label">Full Name</label>
         <input type="text" class="form-input" id="nameInput" placeholder="Dr. Alice Chen" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Email Address</label>
+        <label for="emailInput" class="form-label">Email Address</label>
         <input type="email" class="form-input" id="emailInput" placeholder="admin@vault.io" required value="admin@vault.io" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Access Token / Password</label>
+        <label for="passwordInput" class="form-label">Access Token / Password</label>
         <input type="password" class="form-input" id="passwordInput" placeholder="••••••••••••" required value="vault-cluster-2026" />
       </div>
 
-      <button type="submit" class="btn btn-primary" id="submitBtn">
+      <button type="submit" class="btn btn-primary" id="submitBtn" aria-label="Sign in to cluster">
         <span>🚀 Sign In to Cluster</span>
       </button>
     </form>
 
     <div class="divider">OR CHOOSE 1-CLICK DEMO PROFILE</div>
 
-    <div class="quick-logins">
-      <button class="quick-btn" onclick="quickLogin('Cluster Architect', 'admin@vault.io', 'Storage Architect')">
+    <div class="quick-logins" role="group" aria-label="Demo Profiles">
+      <button class="quick-btn" aria-label="Quick login as Storage Architect" onclick="quickLogin('Cluster Architect', 'admin@vault.io', 'Storage Architect')">
         <span>👑 Storage Architect</span>
         <span class="quick-btn-badge">Full Access</span>
       </button>
-      <button class="quick-btn" onclick="quickLogin('Chaos Engineer', 'chaos@vault.io', 'Chaos Specialist')">
+      <button class="quick-btn" aria-label="Quick login as Chaos Engineer" onclick="quickLogin('Chaos Engineer', 'chaos@vault.io', 'Chaos Specialist')">
         <span>⚡ Chaos Engineer</span>
         <span class="quick-btn-badge">Lab Access</span>
       </button>
@@ -330,7 +353,7 @@
     </div>
 
     <a href="index.html" class="back-home">← Return to Homepage</a>
-  </div>
+  </main>
 
   <script src="vault-storage.js"></script>
   <script>

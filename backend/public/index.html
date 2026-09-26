@@ -3,12 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:;" />
+  <meta name="description" content="Vault: Fault-tolerant distributed object storage platform with 9-node multi-region cluster, SHA-256 chunking, and self-healing resilience." />
   <title>Vault — Fault-Tolerant Distributed Object Storage Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="vault-storage.js"></script>
   <style>
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 16px;
+      background: #FF5722;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      z-index: 99999;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: top 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid #00E5FF;
+    }
+    :focus-visible {
+      outline: 2px solid #FF5722 !important;
+      outline-offset: 3px !important;
+    }
     /* ============================================================
        VAULT DISTINCTIVE PALETTE — WARM OBSIDIAN & SOLAR TANGERINE & EMERALD MINT
        ============================================================ */
@@ -558,35 +581,37 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <div class="ambient-bg">
+  <div class="ambient-bg" aria-hidden="true">
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
     <div class="ambient-orb orb-3"></div>
   </div>
 
-  <nav class="navbar">
-    <a href="index.html" class="nav-brand">
-      <div class="brand-icon">🛡️</div>
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <a href="index.html" class="nav-brand" aria-label="Vault Home">
+      <div class="brand-icon" aria-hidden="true">🛡️</div>
       <div class="brand-title">Vault</div>
       <span class="brand-badge">Distributed S3</span>
     </a>
 
     <ul class="nav-links">
-      <li><a href="dashboard.html" class="nav-link">📊 Dashboard</a></li>
-      <li><a href="files.html" class="nav-link">📁 File Manager</a></li>
-      <li><a href="cluster.html" class="nav-link">🖥️ Cluster Health</a></li>
-      <li><a href="chaos.html" class="nav-link">⚡ Chaos Lab</a></li>
-      <li><a href="settings.html" class="nav-link">⚙️ Settings</a></li>
+      <li><a href="dashboard.html" class="nav-link"><span aria-hidden="true">📊 </span>Dashboard</a></li>
+      <li><a href="files.html" class="nav-link"><span aria-hidden="true">📁 </span>File Manager</a></li>
+      <li><a href="cluster.html" class="nav-link"><span aria-hidden="true">🖥️ </span>Cluster Health</a></li>
+      <li><a href="chaos.html" class="nav-link"><span aria-hidden="true">⚡ </span>Chaos Lab</a></li>
+      <li><a href="settings.html" class="nav-link"><span aria-hidden="true">⚙️ </span>Settings</a></li>
     </ul>
 
     <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle" title="Toggle Theme" onclick="toggleTheme()">☀️</button>
-      <a href="login.html" class="btn btn-secondary" id="authBtn">🔑 Sign In</a>
-      <a href="dashboard.html" class="btn btn-primary">🚀 Launch App</a>
+      <button class="theme-toggle" id="themeToggle" title="Toggle Theme" aria-label="Toggle Dark and Light Theme" onclick="toggleTheme()">☀️</button>
+      <a href="login.html" class="btn btn-secondary" id="authBtn" aria-label="Sign In"><span aria-hidden="true">🔑 </span>Sign In</a>
+      <a href="dashboard.html" class="btn btn-primary" aria-label="Launch App"><span aria-hidden="true">🚀 </span>Launch App</a>
     </div>
   </nav>
 
+  <main id="main-content" role="main">
   <header class="hero">
     <div class="hero-badge">
       <div class="hero-badge-pulse"></div>
@@ -746,8 +771,9 @@
       </div>
     </div>
   </section>
+  </main>
 
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="footer-inner">
       <div class="footer-copy"><strong>Vault Platform</strong> © 2026. Distributed Object Storage System.</div>
       <ul class="footer-links">
@@ -761,7 +787,7 @@
     </div>
   </footer>
 
-  <div class="toast-container" id="toastContainer"></div>
+  <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
 
   <script>
     function toggleTheme() {
