@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:;" />
   <title>File & Folder Manager — Vault Distributed Storage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -10,6 +11,27 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="vault-storage.js"></script>
   <style>
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 16px;
+      background: #FF6B35;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      z-index: 99999;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: top 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid #8B5CF6;
+    }
+    :focus-visible {
+      outline: 2px solid #FF6B35 !important;
+      outline-offset: 3px !important;
+    }
     :root {
       --primary: #FF6B35;
       --primary-hover: #E85A24;
@@ -515,61 +537,62 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <div class="ambient-bg">
+  <div class="ambient-bg" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
   </div>
 
   <!-- Hidden Native File & Folder Inputs -->
-  <input type="file" id="singleFileInput" style="display: none;" onchange="handleSingleFileInput(this.files[0])" />
-  <input type="file" id="folderPickerInput" webkitdirectory directory multiple style="display: none;" onchange="handleFolderUploadInput(this.files)" />
+  <input type="file" id="singleFileInput" aria-label="Choose single file to upload" style="display: none;" onchange="handleSingleFileInput(this.files[0])" />
+  <input type="file" id="folderPickerInput" aria-label="Choose folder directory to upload" webkitdirectory directory multiple style="display: none;" onchange="handleFolderUploadInput(this.files)" />
 
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <a href="index.html" class="sidebar-brand">
-      <div class="brand-icon">🛡️</div>
+  <aside class="sidebar" role="navigation" aria-label="File Manager Navigation">
+    <a href="index.html" class="sidebar-brand" aria-label="Vault Home">
+      <div class="brand-icon" aria-hidden="true">🛡️</div>
       <div class="brand-title">Vault</div>
     </a>
 
     <ul class="nav-list">
-      <li class="nav-item"><a href="dashboard.html">📊 Dashboard</a></li>
-      <li class="nav-item active"><a href="files.html">📁 File Manager</a></li>
-      <li class="nav-item"><a href="cluster.html">🖥️ Cluster Health</a></li>
-      <li class="nav-item"><a href="chaos.html">⚡ Chaos Lab</a></li>
-      <li class="nav-item"><a href="settings.html">⚙️ Settings</a></li>
+      <li class="nav-item"><a href="dashboard.html"><span aria-hidden="true">📊 </span>Dashboard</a></li>
+      <li class="nav-item active"><a href="files.html" aria-current="page"><span aria-hidden="true">📁 </span>File Manager</a></li>
+      <li class="nav-item"><a href="cluster.html"><span aria-hidden="true">🖥️ </span>Cluster Health</a></li>
+      <li class="nav-item"><a href="chaos.html"><span aria-hidden="true">⚡ </span>Chaos Lab</a></li>
+      <li class="nav-item"><a href="settings.html"><span aria-hidden="true">⚙️ </span>Settings</a></li>
     </ul>
 
-    <div class="sidebar-folders">
+    <div class="sidebar-folders" role="region" aria-label="File Category Filters">
       <div class="folder-heading">Filter Objects</div>
-      <div class="folder-item active" id="filter-all" onclick="filterCategory('all', this)">📁 All Objects</div>
-      <div class="folder-item" id="filter-documents" onclick="filterCategory('documents', this)">📄 Documents / PDFs</div>
-      <div class="folder-item" id="filter-videos" onclick="filterCategory('videos', this)">🎬 Videos / Media</div>
-      <div class="folder-item" id="filter-images" onclick="filterCategory('images', this)">🖼️ Images</div>
-      <div class="folder-item" id="filter-archives" onclick="filterCategory('archives', this)">🗜️ Datasets & Zips</div>
-      <div class="folder-item" id="filter-degraded" onclick="filterCategory('degraded', this)">⚠️ Degraded (Healing)</div>
+      <button class="folder-item active" id="filter-all" aria-label="Filter all objects" onclick="filterCategory('all', this)"><span aria-hidden="true">📁 </span>All Objects</button>
+      <button class="folder-item" id="filter-documents" aria-label="Filter documents and PDFs" onclick="filterCategory('documents', this)"><span aria-hidden="true">📄 </span>Documents / PDFs</button>
+      <button class="folder-item" id="filter-videos" aria-label="Filter videos and media" onclick="filterCategory('videos', this)"><span aria-hidden="true">🎬 </span>Videos / Media</button>
+      <button class="folder-item" id="filter-images" aria-label="Filter images" onclick="filterCategory('images', this)"><span aria-hidden="true">🖼️ </span>Images</button>
+      <button class="folder-item" id="filter-archives" aria-label="Filter datasets and zips" onclick="filterCategory('archives', this)"><span aria-hidden="true">🗜️ </span>Datasets & Zips</button>
+      <button class="folder-item" id="filter-degraded" aria-label="Filter degraded healing objects" onclick="filterCategory('degraded', this)"><span aria-hidden="true">⚠️ </span>Degraded (Healing)</button>
     </div>
   </aside>
 
   <!-- Centered Main Content -->
-  <main class="main-wrapper">
+  <main class="main-wrapper" id="main-content" role="main">
     <div class="topbar">
       <div class="search-box">
-        <span>🔍</span>
-        <input type="text" class="search-input" id="fileSearch" placeholder="Search files or folders..." oninput="handleSearch(this.value)" />
-        <span class="search-hint">Ctrl+K</span>
+        <span aria-hidden="true">🔍</span>
+        <input type="text" class="search-input" id="fileSearch" aria-label="Search files or folders" placeholder="Search files or folders..." oninput="handleSearch(this.value)" />
+        <span class="search-hint" aria-hidden="true">Ctrl+K</span>
       </div>
 
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <select class="btn btn-secondary" id="repSelect">
+        <select class="btn btn-secondary" id="repSelect" aria-label="Select replication quorum factor">
           <option value="3" selected>3× Quorum (Standard)</option>
           <option value="5">5× Quorum (High Durability)</option>
           <option value="2">2× Economy Mode</option>
         </select>
 
         <!-- Direct Folder Upload Button -->
-        <button class="btn btn-secondary" onclick="triggerFolderPicker()" style="border-color: rgba(255, 107, 53, 0.4);">
-          <span>📁</span> Upload Folder
+        <button class="btn btn-secondary" aria-label="Upload entire directory folder" onclick="triggerFolderPicker()" style="border-color: rgba(255, 107, 53, 0.4);">
+          <span aria-hidden="true">📁 </span>Upload Folder
         </button>
 
         <!-- Direct File Upload Button -->

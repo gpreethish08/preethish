@@ -3,12 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:;" />
   <title>Chaos Engineering Studio — Vault Distributed Storage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <script src="vault-storage.js"></script>
   <style>
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 16px;
+      background: #FF6B35;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      z-index: 99999;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: top 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid #8B5CF6;
+    }
+    :focus-visible {
+      outline: 2px solid #FF6B35 !important;
+      outline-offset: 3px !important;
+    }
     :root {
       --primary: #FF6B35;
       --primary-hover: #E85A24;
@@ -229,37 +251,38 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <div class="ambient-bg">
+  <div class="ambient-bg" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
   </div>
 
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <a href="index.html" class="sidebar-brand">
-      <div class="brand-icon">🛡️</div>
+  <aside class="sidebar" role="navigation" aria-label="Chaos Lab Navigation">
+    <a href="index.html" class="sidebar-brand" aria-label="Vault Home">
+      <div class="brand-icon" aria-hidden="true">🛡️</div>
       <div class="brand-title">Vault</div>
     </a>
 
     <ul class="nav-list">
-      <li class="nav-item"><a href="dashboard.html">📊 Dashboard</a></li>
-      <li class="nav-item"><a href="files.html">📁 File Manager</a></li>
-      <li class="nav-item"><a href="cluster.html">🖥️ Cluster Health</a></li>
-      <li class="nav-item active"><a href="chaos.html">⚡ Chaos Lab</a></li>
-      <li class="nav-item"><a href="settings.html">⚙️ Settings</a></li>
+      <li class="nav-item"><a href="dashboard.html"><span aria-hidden="true">📊 </span>Dashboard</a></li>
+      <li class="nav-item"><a href="files.html"><span aria-hidden="true">📁 </span>File Manager</a></li>
+      <li class="nav-item"><a href="cluster.html"><span aria-hidden="true">🖥️ </span>Cluster Health</a></li>
+      <li class="nav-item active"><a href="chaos.html" aria-current="page"><span aria-hidden="true">⚡ </span>Chaos Lab</a></li>
+      <li class="nav-item"><a href="settings.html"><span aria-hidden="true">⚙️ </span>Settings</a></li>
     </ul>
   </aside>
 
   <!-- Centered Main Content -->
-  <main class="main-wrapper">
+  <main class="main-wrapper" id="main-content" role="main">
     <div class="chaos-banner">
       <div>
-        <span class="chaos-badge">⚡ Safe Simulation Studio</span>
+        <span class="chaos-badge"><span aria-hidden="true">⚡ </span>Safe Simulation Studio</span>
         <h2 style="font-size: 20px; font-weight: 800; margin: 8px 0 4px;">Disaster Recovery & Chaos Injection Lab</h2>
         <p style="font-size: 13px; color: var(--text-muted);">Test node crashes, partial network partitions, and on-disk bit rot. Observe sub-second auto-repair.</p>
       </div>
-      <button class="btn btn-secondary" onclick="restoreAll()">🔄 Restore All Nodes</button>
+      <button class="btn btn-secondary" aria-label="Restore all simulated cluster nodes" onclick="restoreAll()"><span aria-hidden="true">🔄 </span>Restore All Nodes</button>
     </div>
 
     <div class="chaos-grid">
